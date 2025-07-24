@@ -31,11 +31,28 @@
         <input type="password" class="form-control" id="inputPassword" placeholder="password">
       </div>
     </div>
-    <button type="button" class="btn btn-primary">Login</button>
+    <button type="button" class="btn btn-primary" id="loginBtn">Login</button>
   </form>
+  <hr/>
+  <a href="./login.html">
+    로그인 페이지 이동
+  </a>
+  <br/>
+  <a href="javascript:alert('click!');">
+    테스트
+  </a>
 </body>
 
 <script>
+  let btn = document.querySelector("#loginBtn");
+  console.log("[DEBUG] : ", btn);
+  btn.addEventListener('click', function() {
+    let email = document.querySelector("#staticEmail");
+    console.log("[DEBUG] : ", email.value);
+    let pwd = document.querySelector("#inputPassword");
+    console.log("[DEBUG] : ", pwd.value);
+
+  });
 </script>
 
 </html>
