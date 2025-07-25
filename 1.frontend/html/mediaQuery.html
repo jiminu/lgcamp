@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- 
+    latest mobile 320px ~ 430px css resolution
+    mobile: max 767px -> 모바일 화면 전용
+    tablet: min 768px
+            max 1023px-> 타블렛 화면 전용
+    pc    : min 1024px-> PC 화면 전용
+
+    단위: rem, %, vw, flex
+  -->
+  <style>
+    @media screen and (min-width:768px) and (max-width:1023px) {
+      body {
+        display: flex;
+        background: url("../img/bg-light.jpg") no-repeat;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello, World!</h1>
+</body>
+</html>

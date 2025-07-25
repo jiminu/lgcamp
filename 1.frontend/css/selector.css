@@ -1,0 +1,56 @@
+#signUp {
+  border: 1px solid red;
+  background-color: antiquewhite;
+  width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+#signUp > fieldset {
+  border: 1px solid blue;
+  margin-bottom: 10px;
+}
+
+#signUp legend {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#signUp li {
+  list-style: none;
+  margin-bottom: 5px;
+}
+#signUp ul label {
+  float: left;
+  width: 100px;
+}
+
+#signUp input[type="text"], 
+        input[type="password"] {
+          border-radius: 10px;
+          padding: 5px;
+}
+
+#signUp select[name="level"] {
+  border-radius: 5px;
+  width: 175px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+#signUp fieldset:last-of-type {
+  border: none;
+}
+
+#signUp fieldset button[type="submit"] {
+  border-radius: 10px;
+  font-size: 20px;
+  display: block;
+  margin: auto;
+}
+
+#signUp button:hover {
+  background-color: red;
+  color: white
+}
