@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="name" name="name" placeholder="여기에 입력하세요">
+  <button type="button" onclick="arrowFunc()">send</button>
+
+  <script>
+
+    let array = [
+      {name: "minwoo"},
+      {name: "hoho"},
+      {name: "hey"},
+      {name: "gyak"},
+      {name: "holy"},
+    ];
+
+    console.log(typeof array);
+    console.log(array[0]);
+
+    function btnHandler() {
+      window.alert("click shit");
+    };
+    
+    let btn = function() {
+      window.alert("click shit2");
+    };
+    
+    console.log(typeof btnHandler);
+    console.log(typeof btn);
+    
+    let arrowFunc = () => {
+      window.alert("click shit3");
+    };
+
+    const arrww = [1, 2, 3, 4, 5];
+
+    const [a, b, c, d, e] = arrww;
+
+  </script>
+</body>
+</html>

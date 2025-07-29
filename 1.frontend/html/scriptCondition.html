@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+
+    <style>
+      div.err-msg {
+        color: red;
+      }
+    </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-10">
+        <input type="text"  class="form-control" id="staticEmail" >
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="inputPassword">
+      </div>
+    </div>
+
+    <div id="msg"></div>
+
+    <div class="mb-3 row">
+      <div class="col-sm-10">
+        <button type="button" id="loginBtn" class="btn btn-primary">login</button>
+        <button type="button" id="resetBtn" class="btn btn-danger">reset</button>
+      </div>
+    </div>
+
+    <div id="err-empty-email-or-pwd" style="display: none;">
+      <div class="err-msg">
+        이메일 또는 패스워드를 입력해주세요.
+      </div>
+    </div>
+
+    <div id="for-msg"></div>
+    <ul id="map-result"></ul>
+  </div>
+
+
+
+  <script>
+
+    let age = 10;
+    if (age >= 19) {
+      console.log(`adult`);
+    }
+    else {
+      console.log(`kid`);
+    }
+
+
+    let num = window.parseInt(window.prompt(`please enter as you want [1, 2, 3]`));
+    console.log(typeof num);
+    console.log(`your number is ${num}`);
+
+    switch (num) {
+      case 1: console.log('토레따'); break;
+      case 2: console.log('바까쓰'); break;
+      case 3: console.log('맥쭈'); break;
+      default: console.log('water'); break;
+    }
+
+    document.querySelector(`#loginBtn`).onclick = () => {
+      let email = document.querySelector("#staticEmail").value;
+      let pwd = document.querySelector("#inputPassword").value;
+
+      if (email == '' || pwd == '') {
+        let msg = document.querySelector("#msg");
+
+        let err = document.querySelector("#err-empty-email-or-pwd");
+        err.style.display = 'block'
+        msg.appendChild(err);
+      }
+      else {
+        // document.querySelector("#err-empty-email-or-pwd").style.display = 'none';
+        alert(`login success. email = ${email}, pswd = ${pwd}`);
+      }
+      
+      // alert(`email : ${email}, pws : ${pwd}`);
+    }
+
+      let txtArr = [
+        {
+          img: `커피`,
+          price: 150,
+          descript: "descript"
+        },
+        {
+          img: `콜라`,
+          price: 150,
+          descript: "descript"
+        },
+        {
+          img: `사이다`,
+          price: 150,
+          descript: "descript"
+        },
+      ];
+
+      console.log(txtArr.length);
+
+      let divFor = document.getElementById('for-msg');
+      for (let idx = 0; idx < txtArr.length; ++idx) {
+        card = txtArr[idx];
+
+        let pTag = document.createElement('p');
+        pTag.textContent = `${card.img} ${card.price} ${card.descript}`;
+        divFor.appendChild(pTag);
+        // divFor.appendChild(document.createElement('br'));
+      }
+
+      descAry = txtArr.map(c => 
+        c.descript
+      );
+
+      console.log(descAry);
+
+      const ul = document.getElementById('map-result');
+
+      descAry.forEach(e => {
+        const li = document.createElement('li');
+        li.textContent = e;
+        ul.appendChild(li);
+      })
+
+
+  </script>
+</body>
+
+</html>
