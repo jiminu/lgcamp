@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <h1 id="coffeeH1">에띠오삐아 까삐</h1>
+    <img src="../img/coffee.jpg" alt="" id="coffeeImg">
+
+  </div>
+
+  <div>
+    <button type="button" id="featureBtn">feature change</button>
+  </div>
+
+  <script>
+    // const btn = document.getElementById("featureBtn");
+
+    // btn.addEventListener("click", () => {
+    //   alert("hohoho");
+    // });
+
+
+    document.querySelector(`#featureBtn`).onclick = () => {
+      const hNode = document.getElementById("coffeeH1");
+      const imgNode = document.getElementById("coffeeImg");
+      
+      hNode.textContent = "LG COFFEE";
+      imgNode.src = "../img/coffee2.jpg";
+    }
+    
+    const handler = (heading, img) => {
+      const hNode = document.querySelector("body > div > h1");
+      const imgNode = document.querySelector("body > div > img");
+
+      hNode.innerHTML = `${heading}`;
+      imgNode.src = img
+
+    }
+  </script>
+
+</body>
+</html>

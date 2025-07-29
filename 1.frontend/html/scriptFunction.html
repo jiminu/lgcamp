@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+
+  <script>
+
+    const add = function(a, b) {
+      return a+b;
+    }
+
+    function minus(a, b) {
+      return a-b;
+    }
+
+    const multi = (a, b) => {
+      return a*b;
+    }
+
+    console.log(add(10,20));
+    console.log(minus(10,20));
+    console.log(multi(10,20));
+
+
+    const sayHello = () => console.log("hello");
+
+    const oneParam = a => console.log(`received ${a}`);
+
+
+    const ages = [10, 20, 30, 40, 5];
+
+    const newAges = ages.map( age => age*2);
+    const even = ages.filter(age => {
+      return age % 2 === 0;
+    });
+
+    console.log(even);
+
+    const userAry = [
+      {
+        email: "email@gmail",
+        nickname: "min", 
+      },
+      {
+        email: "email@naver",
+        nickname: "woo", 
+      },
+      {
+        email: "email@lg",
+        nickname: "ji", 
+      },
+    ];
+
+    const quiz = userAry.reduce((ary, obj) => {
+      ary[obj.email] = obj.nickname;
+      return ary
+    }, {});
+
+    console.log(quiz);
+
+
+  </script>
+
+</body>
+</html>

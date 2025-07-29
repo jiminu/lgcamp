@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+  <style>
+
+    #table1, th, td {
+      border: 1px solid red;
+      /* border-radius: 5px; */
+      /* border-collapse: collapse; */
+    }
+
+th, td {
+  padding: 10px 20px;
+}
+  </style>
+</head>
+
+<body>
+  <h1 id="heading">좌석</h1>
+  <p id="msg"></p>
+  <div id="result">
+    <table id="table1">
+      <tbody id="tbody">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const customer = parseInt(prompt("입장객은 몇명?"));
+    const column = parseInt(prompt("한 줄에 몇명?"));
+
+    document.getElementById("heading").innerHTML = "자리 배치도";
+    document.getElementById("msg").innerHTML = "꺗후";
+
+    const line = Math.ceil(customer / column);
+
+    document.getElementById("msg").innerHTML = `${line} 줄 필요`
+
+    for (let i = 0; i < customer; ++i) {
+      let trCount = document.getElementsByTagName("tr");
+      if (trCount.length === 0 || i % column === 0) {
+        document.getElementById("tbody").appendChild(document.createElement("tr"));
+      }
+      trCount = document.getElementsByTagName("tr");
+      const td = document.createElement("td");
+      td.innerHTML = i;
+      trCount[trCount.length-1].appendChild(td);
+    }
+  </script>
+  
+</body>
+
+</html>
