@@ -1,28 +1,38 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import LibraryPage from "./pages/LibraryPage";
-import BookComponent from "./components/BookComponent";
-import CommentComponent from "./components/CommentComponent";
-import CommentPage from "./pages/CommentPage";
-import TodosPage from "./pages/TodosPage";
-import UserPage from "./pages/rendering/UserPage";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <UserPage />
-  </React.StrictMode>
-);
-
+// import NotificationPage from "./pages/hook/NotificationPage";
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
 //   <React.StrictMode>
-//     <TodosPage />
+//     <NotificationPage />
 //   </React.StrictMode>
 // );
+// import StateSample from "./pages/state/StateSample";
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <React.StrictMode>
+//     <StateSample />
+//   </React.StrictMode>
+// );
+
+// import UserPage from "./pages/rendering/UserPage";
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <React.StrictMode>
+//     <UserPage />
+//   </React.StrictMode>
+// );
+
+import TodosPage from "./pages/TodosPage";
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <TodosPage />
+  </React.StrictMode>
+);
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(

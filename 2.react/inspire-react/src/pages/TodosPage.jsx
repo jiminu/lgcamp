@@ -1,4 +1,5 @@
-import { use, useState } from "react";
+import { useRef, useState } from "react";
+import Notification from "../components/hook/Notification";
 
 export default function TodosPage() {
   // let txt = "";
@@ -10,6 +11,11 @@ export default function TodosPage() {
   };
   const txtHandler = (e) => {
     setTxt(e.target.value);
+  };
+
+  const container = useRef(null);
+  const makeNewMsg = (msg) => {
+    return <div>{<Notification msg={msg} />}</div>;
   };
 
   return (
@@ -29,13 +35,14 @@ export default function TodosPage() {
           <button
             type="button"
             class="btn btn-primary"
-            onClick={() => btnHandler(txt)}
+            onClick={() => makeNewMsg(txt)}
           >
             add
           </button>
         </div>
       </form>
       data output
+      <div ref={container} id="notifications"></div>
     </div>
   );
 }
