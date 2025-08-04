@@ -3,13 +3,16 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
-// import NotificationPage from "./pages/hook/NotificationPage";
+// import SignUpPage from "./components/form/SignUpPage";
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
-//   <React.StrictMode>
-//     <NotificationPage />
-//   </React.StrictMode>
+//     <SignUpPage />
 // );
+
+// import NotificationPage from "./pages/hook/NotificationPage";
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(<NotificationPage />);
+
 // import StateSample from "./pages/state/StateSample";
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
@@ -26,13 +29,13 @@ import reportWebVitals from "./reportWebVitals";
 //   </React.StrictMode>
 // );
 
-import TodosPage from "./pages/TodosPage";
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <TodosPage />
-  </React.StrictMode>
-);
+// import TodosPage from "./pages/TodosPage";
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <React.StrictMode>
+//     <TodosPage />
+//   </React.StrictMode>
+// );
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
@@ -48,12 +51,17 @@ root.render(
 //   </React.StrictMode>
 // );
 
+// import App from "./App.js";
 // const root = ReactDOM.createRoot(document.getElementById('root'));
 // root.render(
-//   <React.StrictMode>
 //     <App />
-//   </React.StrictMode>
 // );
+
+import ContextApp from "./pages/ContextApp";
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <ContextApp />
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

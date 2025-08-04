@@ -5,6 +5,7 @@ export default function TodosPage() {
   // let txt = "";
 
   const [txt, setTxt] = useState("");
+  const [notifications, setNotifications] = useState([]);
 
   const btnHandler = (msg) => {
     console.log(msg);
@@ -12,10 +13,9 @@ export default function TodosPage() {
   const txtHandler = (e) => {
     setTxt(e.target.value);
   };
-
-  const container = useRef(null);
   const makeNewMsg = (msg) => {
-    return <div>{<Notification msg={msg} />}</div>;
+    setNotifications((prev) => [...prev, { msg }]);
+    setTxt("");
   };
 
   return (
@@ -42,7 +42,13 @@ export default function TodosPage() {
         </div>
       </form>
       data output
-      <div ref={container} id="notifications"></div>
+      <div id="notifications">
+        {notifications.map((notification) => (
+          <div>
+            <Notification msg={notification.msg} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
