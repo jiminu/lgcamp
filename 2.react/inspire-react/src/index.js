@@ -57,11 +57,17 @@ import reportWebVitals from "./reportWebVitals";
 //     <App />
 // );
 
-import ContextApp from "./pages/ContextApp";
+import BlogApp from "./BlogApp.js";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ContextApp />
+    <BlogApp />
 );
+
+// import ContextApp from "./pages/ContextApp";
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//     <ContextApp />
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
