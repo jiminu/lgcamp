@@ -66,11 +66,12 @@ margin: 100px auto;
 const BlogReadPage = () => {
   const { blogId } = useParams();
   const [blog, setBlog] = useState({});
+  const [comment, setComment] = useState("");
 
   const moveUrl = useNavigate();
   const getBlog = async () => {
     // await api.get(`/blogs/${blogId}`, {
-    await api.get(`/blogs`, {
+    await api.get(`/blogs?_embed=comments`, {
       params: {
         id: blogId
       }
@@ -83,11 +84,25 @@ const BlogReadPage = () => {
         console.log(error);
       })
   };
+  const commentHandler = async (blogId, content) => {
+    const data = {
+      blogId,
+      content
+    }
+    await api.post(`/comments`, data)
+      .then(response => {
+        console.log(response.data);
+        setComment("");
+        getBlog();
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  };
+
   useEffect(() => {
     getBlog();
   }, []);
-
-  console.log(blogId);
 
   return (
     <Wrapper>
@@ -106,9 +121,14 @@ const BlogReadPage = () => {
 
           <CommentLabel>댓글</CommentLabel>
 
-          <BlogCommentList comments={blog.comments}></BlogCommentList>
-          <TextArea height={40}></TextArea>
-          <Button title="댓글 작성"></Button>
+          <BlogCommentList comments={blog.comments || []}></BlogCommentList>
+
+          
+          <TextArea height={40} value={comment} changeHandler={(e) => {
+            setComment(e.target.value);
+          }}></TextArea>
+          
+          <Button title="댓글 작성" btnHandler={() => commentHandler(blog.id, comment)}></Button>
 
 
         </Container>

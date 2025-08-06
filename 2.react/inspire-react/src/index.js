@@ -57,11 +57,17 @@ import reportWebVitals from "./reportWebVitals";
 //     <App />
 // );
 
-import BlogApp from "./BlogApp.js";
+import WeatherApp from "./WeatherApp.js";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BlogApp />
+    <WeatherApp />
 );
+
+// import BlogApp from "./BlogApp.js";
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//     <BlogApp />
+// );
 
 // import ContextApp from "./pages/ContextApp";
 // const root = ReactDOM.createRoot(document.getElementById('root'));

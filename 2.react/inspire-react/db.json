@@ -5,17 +5,7 @@
     {
       "title": "연습입니다",
       "content": "끼얏호우",
-      "id": 1,
-      "comments": [
-        {
-          "id": 1,
-          "content": "댓글이에용"
-        },
-        {
-          "id": 2,
-          "content": "댓글아니에용"
-        }
-      ]
+      "id": 1
     },
     {
       "title": "",
@@ -26,6 +16,43 @@
       "title": "호이호이",
       "content": "푀오핑!",
       "id": 3
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "content": "댓글이에용",
+      "blogId": 1
+    },
+    {
+      "id": 2,
+      "content": "댓글아니에용",
+      "blogId": 1
+    },
+    {
+      "blogId": 1,
+      "content": "테스트에용",
+      "id": 3
+    },
+    {
+      "blogId": 1,
+      "content": "테스트 아니에용",
+      "id": 4
+    },
+    {
+      "blogId": 2,
+      "content": "테스트인가용?",
+      "id": 5
+    },
+    {
+      "blogId": 3,
+      "content": "아닐걸용!",
+      "id": 6
+    },
+    {
+      "blogId": 1,
+      "content": "ㄷㄷ",
+      "id": 7
     }
   ]
 }

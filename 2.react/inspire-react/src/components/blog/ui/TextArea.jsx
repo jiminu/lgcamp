@@ -15,7 +15,7 @@ margin-bottom:16px;
 
 const TextArea = ({height, value, changeHandler, placeholder}) => {
   return (
-    <StyledTextarea height={height} value={value} onChange={changeHandler} placeholder={placeholder}/>
+    <StyledTextarea height={height} value={value} onChange={changeHandler} placeholder={placeholder || null}/>
   );
 }
 
