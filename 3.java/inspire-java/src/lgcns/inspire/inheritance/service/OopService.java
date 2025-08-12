@@ -8,6 +8,5 @@ public interface OopService {
     public PersonDTO getFindPerson(String name);
     public PersonDTO[] getPersonList();
 
-    private void setPerson(PersonDTO person);
     // public void setPerson(PersonDTO person);
 }
