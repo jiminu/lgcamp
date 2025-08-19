@@ -18,14 +18,15 @@ public class PostInsertCtrl {
 
     public int insert(String title, String content, String writer) {
         List<PostResponseDTO> list = service.selectService();
+        
         int id = list.size() + 1;
 
         PostResponseDTO dto = PostResponseDTO.builder()
-                .id(id)
-                .title(title)
-                .content(content)
-                .writer(writer)
-                .build();
+                                            .id(id)
+                                            .title(title)
+                                            .content(content)
+                                            .writer(writer)
+                                            .build();
 
         return service.postService(dto);
     }

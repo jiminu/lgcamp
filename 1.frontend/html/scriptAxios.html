@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <style>
+    .product {
+      border: 1px solid tomato;
+      width: 200px;
+      padding: 16px;
+      margin: 8px;
+    }
+    .product img{
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>상품 목록</h1>
+  <div id="prd-list"></div>
+
+  <script>
+
+    async function fetchProduct() {
+      await axios.get("https://fakestoreapi.com/products")
+        .then(response => {
+          const productContainer = document.getElementById("prd-list");
+          const products = response.data;
+
+          products.forEach(prod => {
+            const div = document.createElement("div");
+            div.className = "product";
+            div.innerHTML = `
+              <img src="${prod.image}">
+              <h3>${prod.title}</h3>
+              <p>${prod.price}</p>`;
+            productContainer.appendChild(div);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    fetchProduct();
+
+  </script>
+</body>
+
+</html>

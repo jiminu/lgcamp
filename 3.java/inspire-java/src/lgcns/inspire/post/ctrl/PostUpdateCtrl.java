@@ -1,6 +1,8 @@
 package lgcns.inspire.post.ctrl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import lgcns.inspire.post.domain.dto.PostResponseDTO;
@@ -18,15 +20,20 @@ public class PostUpdateCtrl {
     }
 
     public int update(String title, String content, int id) {
-        Optional<PostResponseDTO> post = service.selectService(id);
         
-        if (post.isPresent()) {
-            
-            return 1;
-        }
-        else {
-            return 0;
-        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", id);
+        map.put("title", title);
+        map.put("content", content);
+        
+        PostResponseDTO dto = PostResponseDTO.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .build();
+        
+        return service.updateService(dto);
+        
     }
 
 }

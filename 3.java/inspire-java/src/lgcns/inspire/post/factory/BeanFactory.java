@@ -7,6 +7,7 @@ import lgcns.inspire.post.ctrl.PostDeleteCtrl;
 import lgcns.inspire.post.ctrl.PostFindCtrl;
 import lgcns.inspire.post.ctrl.PostInsertCtrl;
 import lgcns.inspire.post.ctrl.PostListCtrl;
+import lgcns.inspire.post.ctrl.PostSaveCtrl;
 import lgcns.inspire.post.ctrl.PostSearchCtrl;
 import lgcns.inspire.post.ctrl.PostUpdateCtrl;
 import lgcns.inspire.post.service.PostService;
@@ -29,7 +30,7 @@ public class BeanFactory {
     private PostService service;
 
     private BeanFactory() {
-        map = new HashMap<>();
+        map     = new HashMap<>();
         service = new PostServiceImpl();
         map.put("list", new PostListCtrl(service));
         map.put("find", new PostFindCtrl(service));
@@ -37,6 +38,7 @@ public class BeanFactory {
         map.put("delete", new PostDeleteCtrl(service));
         map.put("update", new PostUpdateCtrl(service));
         map.put("search", new PostSearchCtrl(service));
+        map.put("save", new PostSaveCtrl(service));
     }
 
     public static BeanFactory getInstance() {

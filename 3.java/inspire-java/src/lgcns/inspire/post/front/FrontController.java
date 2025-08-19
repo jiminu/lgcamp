@@ -7,6 +7,7 @@ import lgcns.inspire.post.ctrl.PostDeleteCtrl;
 import lgcns.inspire.post.ctrl.PostFindCtrl;
 import lgcns.inspire.post.ctrl.PostInsertCtrl;
 import lgcns.inspire.post.ctrl.PostListCtrl;
+import lgcns.inspire.post.ctrl.PostSaveCtrl;
 import lgcns.inspire.post.ctrl.PostSearchCtrl;
 import lgcns.inspire.post.ctrl.PostUpdateCtrl;
 import lgcns.inspire.post.domain.dto.PostResponseDTO;
@@ -15,7 +16,7 @@ import lgcns.inspire.post.service.PostService;
 import lgcns.inspire.post.service.PostServiceImpl;
 
 public class FrontController {
-
+    
     private BeanFactory factory;
     
     public FrontController() {
@@ -45,7 +46,7 @@ public class FrontController {
         return obj.findPost(id);
     }
     
-    public boolean delete(String requestURL, int id) {
+    public int delete(String requestURL, int id) {
         System.out.println(">>> front delete");
         
         PostDeleteCtrl obj = (PostDeleteCtrl)factory.getCtrl(requestURL);
@@ -67,6 +68,15 @@ public class FrontController {
         PostSearchCtrl obj = (PostSearchCtrl) factory.getCtrl(requestURL);
 
         return obj.search(writer);
+        
+    }
+    
+    public int save(String requestURL, String path) {
+        System.out.println(">>> front save");
+
+        PostSaveCtrl obj = (PostSaveCtrl)factory.getCtrl(requestURL);
+        
+        return obj.save(path);
         
     }
 }

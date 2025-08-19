@@ -55,6 +55,7 @@ public class PostView {
                     findByWriter();
                     break;
                 case 99:
+                    save();
                     System.out.println("종료");
                     // System.exit(0);
                     break outer;
@@ -70,15 +71,14 @@ public class PostView {
         System.out.println(">>> 데이터 출력");
         
         List<PostResponseDTO> list = front.list("list");
-        System.out.println(">> view list : " + list);
+        // System.out.println(">> view list : " + list);
         
         // list.stream()
         //     .map(PostResponseDTO::getTitle)
         //     .forEach(System.out::println);
             
-        // list.stream()
-        //     .filter(post -> post.getId() >= 2)
-        //     .forEach(System.out::println);
+        list.stream()
+            .forEach(System.out::println);
         
         
         System.out.println();
@@ -136,9 +136,9 @@ public class PostView {
         System.out.print("id를 입력하세요 : ");
         int id = Integer.parseInt(scan.nextLine());
         
-        boolean result = front.delete("delete", id);
+        int result = front.delete("delete", id);
 
-        System.out.println(result ? "삭제 완료" : "삭제 실패");
+        System.out.println(result == 1 ? "삭제 완료" : "삭제 실패");
     }
     
     public void update() {
@@ -159,5 +159,13 @@ public class PostView {
         else {
             System.out.println("수정 실패");
         }
+    }
+    
+    public void save() {
+        System.out.println(">>> front save");
+
+        int result = front.save("save", "./test.txt");
+
+        System.out.println(result == 1 ? "저장 완료" : "저장 실패");
     }
 }

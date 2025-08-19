@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <style>
+    #main-containger {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    .user-div {
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      width: 30em;
+    }
+    .user-div_content {
+      border: 1px dashed violet ;
+      border-radius: 10px;
+      padding: 5px 15px;
+    }
+    #name {
+      font-weight: bold;
+      font-size: 30px;
+      border: none;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>유저</h1>
+
+  <div id="main-container">
+  </div>
+
+  <script>
+
+    const fetchUser = async () => {
+      await axios.get("https://jsonplaceholder.typicode.com/users")
+        .then(response => {
+          const mainContainer = document.getElementById("main-container");
+          const users = response.data;
+
+          let contents = "";
+          users.forEach(user => {
+            const content = `
+            <div class="user-div">
+              <div class="user-div_content"><label id="name"> name: ${user.name} </label></div><br>
+              <div class="user-div_content"><label id="username"> username: ${user.username} </label></div><br>
+              <div class="user-div_content"><label id="email"> email: ${user.email} </label></div><br>
+              <div class="user-div_content"><label id="address"> address: ${user.address.street} ${user.address.suite} ${user.address.city} ${user.address.zipcode}</label></div><br>
+
+              <div class="user-div_content"><label id="phone"> phone: ${user.phone} </label></div><br>
+              <div class="user-div_content"><label id="website"> website: ${user.website} </label></div><br>
+              <div class="user-div_content"><label id="company"> company: ${user.company.name} </label></div><br>
+
+            </div>
+            
+            `;
+            contents += content;
+          });
+          document.getElementById("main-container").innerHTML = contents;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+    fetchUser();
+
+  </script>
+</body>
+
+</html>
