@@ -1,5 +1,8 @@
 package lgcns.inspire.post.ctrl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lgcns.inspire.post.service.PostService;
 import lgcns.inspire.post.service.PostServiceImpl;
 
@@ -13,9 +16,14 @@ public class PostDeleteCtrl {
         this.service = service;
     }
     
-    public boolean delete(int id) {
+    public int delete(int id) {
         System.out.println(">>> delete ctrl id : " + id);
+        
+        Map<String, Integer> map = new HashMap<>();
+        map.put("key", id);
+        
+        return service.deleteService(map);
 
-        return true;
+        // return 1;
     }
 }
