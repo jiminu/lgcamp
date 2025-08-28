@@ -994,6 +994,17 @@ INSERT INTO dept_tbl(DEPT_ID, DEPT_TITLE) VALUES
 -- 외래키 옵션 : 참조무결성 관련
 -- ON DELETE CASCADE, ON UPDATE CASCADE
 
+
+
+
+-- DDL(DATA DEFINITION LANGUAGE) : CREATE, DROP, ALTER 
+-- TABLE (CONSTRAINT) : NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK
+-- VIEW : 읽기 전용(권한, 복잡한 질의어를 단순하게)
+
+
+-- DML(DATA MANIPULATION LANGUAGE) : INSERT, UPDATE, DELETE
+ 
+
 DROP TABLE IF EXISTS emp_tbl;
 
 CREATE TABLE EMP_TBL(
@@ -1003,9 +1014,20 @@ CREATE TABLE EMP_TBL(
 	GENDER		CHAR(1)			CHECK( GENDER IN ('F', 'M')),
 	JOB_ID		CHAR(3)			NOT NULL,
 	DEPT_ID		CHAR(2)			NOT NULL,
+	HIRE_DATE	DATE				DEFAULT SYSDATE(),
 	FOREIGN KEY (JOB_ID)			REFERENCES job_tbl (JOB_ID),
 	FOREIGN KEY (DEPT_ID)			REFERENCES dept_tbl (DEPT_ID)
 );
+
+CREATE TABLE EMP_TBL(
+	EMP_ID 		VARCHAR(20) 		PRIMARY KEY,
+	EMP_NAME 	VARCHAR(100) 	NOT NULL,
+	SALARY 		INT 				CHECK( SALARY > 0 ),
+	GENDER		CHAR(1)			CHECK( GENDER IN ('F', 'M')),
+	JOB_ID		CHAR(3)			NOT NULL,
+	DEPT_ID		CHAR(2)			NOT NULL
+);
+
 
 
 SELECT	*
@@ -1024,5 +1046,394 @@ VALUES ('100', '임정섭', 0, 'F', 'J1', '10');
 INSERT INTO EMP_TBL() 
 VALUES ('100', '임정섭', 100, '?', 'J1', '10');
 
-INSERT INTO EMP_TBL() 
-VALUES ('200', '임정섭', 100, 'F', 'J5', '40');
+INSERT INTO EMP_TBL
+VALUES ('200', '임정섭', 100, 'F', 'J5', '40', NULL);
+
+INSERT INTO EMP_TBL
+VALUES ('400', '임정섭', 100, 'F', 'J5', '40', DEFAULT);
+
+INSERT INTO emp_tbl(EMP_ID, EMP_NAME, SALARY, GENDER, JOB_ID, DEPT_ID)
+VALUES ('500', '임정섭', 100, 'F', 'J5', '40');
+
+SHOW INDEX FROM emp_tbl;
+
+
+-- 테이블 생성 후 제약 조건을 추가하기 위해서 ALTER
+ALTER TABLE emp_tbl
+	ADD CONSTRAINT 
+	FOREIGN KEY (JOB_ID) REFERENCES job_tbl(JOB_ID)
+	
+ALTER TABLE emp_tbl
+	ADD CONSTRAINT 
+	FOREIGN KEY (DEPT_ID) REFERENCES dept_tbl(DEPT_ID)
+	
+ALTER TABLE emp_tbl
+	ADD COLUMN HIRE_DATE DATE DEFAULT SYSDATE();
+
+
+CREATE TABLE cus_tbl(
+	cus_id		VARCHAR(20) PRIMARY KEY,
+	cus_name		VARCHAR(20) CHECK( cus_name IS NOT NULL ),
+	cus_gender	CHAR(1)		CHECK( cus_gender IN ('F', 'M'))
+);
+
+/*
+ INSERT 구문
+ INSERT INTO TABLE_NAME ([COLUMN_LIST]) VALUES ([DATA])
+ 주의 ) 컬럼 리스트 개수와 데이터의 개수와 타입이 일치해야 함
+*/
+
+INSERT INTO cus_tbl VALUES('1', '임정섭', 'M');
+
+SELECT *
+FROM cus_tbl;
+
+
+CREATE TABLE prod_tbl (
+	prod_id		INT			AUTO_INCREMENT PRIMARY KEY,
+	prod_name	VARCHAR(20)	DEFAULT '라벨없음'
+);
+INSERT INTO prod_tbl(prod_name) VALUES('아이패드');
+SELECT *
+FROM prod_tbl;
+
+CREATE TABLE ord_tbl(
+	ord_id		INT		AUTO_INCREMENT,
+	cus_id		VARCHAR(20),
+	prod_id		INT,
+	PRIMARY KEY (ord_id, cus_id, prod_id),
+	FOREIGN KEY (cus_id)			REFERENCES cus_tbl (cus_id),
+	FOREIGN KEY (prod_id)		REFERENCES prod_tbl (prod_id)
+);
+INSERT INTO ord_tbl(cus_id, prod_id) VALUES(1, 1);
+SELECT *
+FROM ord_tbl;
+
+SELECT		cus_name,
+				prod_name
+FROM 			cus_tbl C
+JOIN			ord_tbl O ON (C.cus_id = O.cus_id)
+JOIN			prod_tbl P ON (P.prod_id = O.prod_id);
+
+
+CREATE VIEW EMP_VIEW
+AS
+SELECT 	EMP_ID,
+			EMP_NAME,
+			EMAIL,
+			JOB_ID,
+			DEPT_ID
+FROM		employee;
+
+SELECT *
+FROM emp_view;
+
+
+-- UPDATE
+-- 테이블에 포함된 기존 데이터를 수정 (건 수는 수정 X)
+
+/*
+UPDATE 	TABLE_NAME
+SET		COLUMN_NAME = VALUE, [COLUMN_NAME = VALUE]
+WHERE		CONDITION;
+*/
+
+SELECT		*
+FROM			employee;
+
+-- 심하균의 직급, 부서, 급여를 성해교의 직급, 부서, 급여로 업데이트?
+UPDATE	employee
+SET		JOB_ID = (SELECT JOB_ID
+						 FROM employee	
+						 WHERE EMP_NAME = '성해교'),
+			DEPT_ID = (SELECT DEPT_ID
+						 FROM employee	
+						 WHERE EMP_NAME = '성해교'),
+			SALARY = (SELECT SALARY
+						 FROM employee	
+						 WHERE EMP_NAME = '성해교')
+WHERE		EMP_NAME = '심하균';
+
+UPDATE 	employee
+SET		marriage = DEFAULT
+WHERE		EMP_NAME = '나승원';
+
+
+-- DELETE : 테이블에 포함된 데이터 삭제
+-- 행 단위로 삭제되므로 행 수가 달라짐
+-- 참조무결성 주의
+/*
+DELETE [FROM] 	TABLE_NAME
+WHERE				CONDITION;
+*/
+
+DELETE FROM department
+WHERE			DEPT_ID = 20;
+
+
+
+
+-- DDL 실습과제
+-- 1
+CREATE TABLE customers (
+	cno		INT PRIMARY KEY ,
+	cname		VARCHAR(10)	NOT NULL,
+	address	VARCHAR(50)	NOT NULL,
+	email		VARCHAR(20)	NOT NULL,
+	phone		VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE products (
+	pno	INT	PRIMARY KEY,
+	pname	VARCHAR(20)	NOT NULL,
+	cost	INT	NOT NULL,
+	stock	INT	NOT NULL 
+);
+
+CREATE TABLE orders (
+	orderno		INT			PRIMARY KEY,
+	orderdate	DATE			DEFAULT SYSDATE(),
+	address		VARCHAR(50)	NOT NULL,
+	phone			VARCHAR(20)	NOT NULL,
+	STATUS		VARCHAR(20)	NOT NULL CHECK( STATUS IN ('결제완료', '배송중', '배송완료')),
+	cno			INT,
+	FOREIGN KEY	(cno) REFERENCES customers(cno)
+);
+
+CREATE TABLE orderdetail (
+	orderno		INT			,
+	pno			INT			,
+	qty			INT 			DEFAULT 0,
+	cost			INT			DEFAULT 0,
+	PRIMARY KEY	(orderno, pno),
+	FOREIGN KEY	(orderno) REFERENCES orders(orderno),
+	FOREIGN KEY	(pno) REFERENCES products(pno)
+);
+
+-- 2 
+INSERT INTO products VALUES 
+(1001, '삼양라면', 1000, 200),
+(1002, '새우깡', 1500, 500),
+(1003, '월드콘', 2000, 350),
+(1004, '빼빼로', 		2000, 700),
+(1005, '코카콜라',81000, 550),
+(1006, '환타', 		1600 ,300)
+;
+
+-- 3
+INSERT INTO customers VALUES 
+(101, '김철수', '서울 강남구', 'cskim@naver.com', '899-6666'),
+(102, '이영희', '부산 서면', 'yhlee@empal.com', '355-8882'),
+(103, '최진국', '제주 동광양', 'jkchoi@gmail.com', '852-5764'),
+(104, '강준호', '강릉 홍제동', 'jhkang@hanmail.com', '559-7777'),
+(105, '민병국', '대전 전민동', 'bgmin@hotmail.com', '559-8741'),
+(106, '오민수', '광주 북구', 'msoh@microsoft.com', '542-9988')
+;
+
+-- 4
+INSERT INTO orders VALUES
+(1, 
+SYSDATE(), 
+'서울 강남구', 
+'899-6666', 
+'결제완료', 
+(SELECT cno FROM customers WHERE cname = '김철수'))
+
+INSERT INTO orderdetail VALUES
+(
+	1,
+	(SELECT pno FROM products WHERE pname = '삼양라면'),
+	50,
+	1000
+);
+
+-- 5
+UPDATE 	products
+SET 		stock = 150
+WHERE		pno = 1001;
+
+-- 6
+INSERT INTO orders VALUES
+(2, 
+SYSDATE(), 
+'서울 강남구', 
+'337-5000', 
+'결제완료', 
+(SELECT cno FROM customers WHERE cname = '이영희'))
+
+INSERT INTO orderdetail VALUES
+(
+	2,
+	(SELECT pno FROM products WHERE pname = '새우깡'),
+	100,
+	1500
+);
+INSERT INTO orderdetail VALUES
+(
+	2,
+	(SELECT pno FROM products WHERE pname = '월드콘'),
+	150,
+	2000
+);
+
+-- 7
+UPDATE 	products
+SET 		stock = 400
+WHERE		pno = 1002;
+UPDATE 	products
+SET 		stock = 200
+WHERE		pno = 1003;
+
+-- 8
+INSERT INTO orders VALUES
+(3, 
+SYSDATE(), 
+'광주 북구', 
+'652-2277', 
+'결제완료', 
+(SELECT cno FROM customers WHERE cname = '오민수'))
+
+INSERT INTO orderdetail VALUES
+(
+	3,
+	(SELECT pno FROM products WHERE pname = '빼빼로'),
+	100,
+	2000
+);
+INSERT INTO orderdetail VALUES
+(
+	3,
+	(SELECT pno FROM products WHERE pname = '코카콜라'),
+	50,
+	1800
+);
+
+-- 9
+UPDATE 	products
+SET 		stock = 600
+WHERE		pno = 1004;
+UPDATE 	products
+SET 		stock = 500
+WHERE		pno = 1005;
+
+-- 10
+SELECT 	O.orderdate,
+			C.cname,
+			C.address,
+			C.phone,
+			O.`STATUS`,
+			P.pname,
+			OD.cost,
+			OD.qty,
+			OD.cost * OD.qty
+FROM 		customers C
+JOIN		orders O 		ON (C.cno = O.cno)
+JOIN 		orderdetail OD	ON (O.orderno = OD.orderno)
+JOIN		products P		ON (P.pno = OD.pno);
+
+-- 11
+SELECT orderdate,
+		 SUM(OD.cost*OD.qty)
+FROM orders O
+JOIN	orderdetail OD ON (O.orderno = OD.orderno)
+GROUP BY orderdate;
+
+-- 12
+INSERT INTO products VALUES 
+(1007, '목캔디', 3000, 500);
+
+SELECT *
+FROM products;
+
+-- 13
+INSERT INTO orders VALUES
+(4, 
+SYSDATE(), 
+'제주 동광양', 
+'352-4657', 
+'결제완료', 
+(SELECT cno FROM customers WHERE cname = '최진국'));
+
+INSERT INTO orderdetail VALUES
+(
+	4,
+	(SELECT pno FROM products WHERE pname = '목캔디'),
+	200,
+	3000
+);
+
+
+-- DDL 실습과제 2
+-- 1
+CREATE TABLE MEMBER (
+	member_id		INT				PRIMARY KEY,
+	name				VARCHAR(25)		NOT NULL,
+	address			VARCHAR(100),
+	city				VARCHAR(30),
+	phone				VARCHAR(15),
+	join_date		DATE				DEFAULT SYSDATE() NOT NULL
+);
+
+CREATE TABLE title (
+	title_id			INT				PRIMARY KEY,
+	title				VARCHAR(60)		NOT NULL,
+	description		VARCHAR(400)	NOT NULL,
+	rating			VARCHAR(20)		CHECK	( rating IN ('18가', '15가', '12가', '전체가') ),
+	category			VARCHAR(20)		CHECK	( category IN ('드라마', '코미디', '액션', '아동', 'SF', '다큐멘터리') ),
+	release_date	DATE	
+);
+
+CREATE TABLE title_copy (
+	copy_id			INT,
+	title_id			INT,
+	STATUS			VARCHAR(20)		NOT NULL CHECK	( STATUS IN ('대여가능', '파손', '대여중', '예약')),
+	PRIMARY KEY (copy_id, title_id),
+	FOREIGN KEY (title_id) REFERENCES title(title_id)
+);
+
+CREATE TABLE rental (
+	book_date		DATE		DEFAULT SYSDATE(),
+	member_id		INT,
+	copy_id			INT,
+	title_id			INT,
+	act_ret_date	DATE,
+	exp_ret_date	DATE		DEFAULT ADDDATE(SYSDATE(), INTERVAL 2 DAY ),
+	PRIMARY KEY		(book_date, member_id, copy_id, title_id),
+	FOREIGN KEY	(member_id) REFERENCES MEMBER(member_id),
+	FOREIGN KEY	(copy_id) REFERENCES title_copy(copy_id),
+	FOREIGN KEY	(title_id) REFERENCES title_copy(title_id)	
+);
+
+CREATE TABLE reservation (
+	res_date		DATE,
+	member_id	INT,
+	title_id		INT, 
+	PRIMARY KEY	(res_date, member_id, title_id),
+	FOREIGN KEY	(member_id) REFERENCES MEMBER(member_id),
+	FOREIGN KEY	(title_id) REFERENCES title_copy(title_id)	
+);
+
+-- 2
+CREATE VIEW member_id_seq
+AS
+SELECT 
+
+SELECT *
+FROM title;
+
+
+
+CREATE TABLE BLOG_TBL(
+ID INT AUTO_INCREMENT PRIMARY KEY,
+TITLE VARCHAR(50) NOT NULL ,
+CONTENT VARCHAR(1000) NOT NULL
+);
+
+INSERT INTO blog_tbl(TITLE, CONTENT) VALUES
+('강사님 짱!!', '냉무'),
+('내일은 불금이다', '즐기자'),
+('배고프다', '마라탕~ 콜') ;
+
+
+SELECT *
+FROM blog_tbl;
