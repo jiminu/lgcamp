@@ -4,10 +4,22 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.lgcns.inspire_restspring.rest.blog.domain.BlogRequestDTO;
 import com.lgcns.inspire_restspring.rest.blog.domain.BlogResponseDTO;
 
 @Mapper
 public interface BlogMapper {
     
     public List<BlogResponseDTO> selectRow();
+
+    public int insertRow(BlogRequestDTO request);
+
+    public int updateRow(BlogRequestDTO request);
+
+    public BlogResponseDTO findById(int id);
+
+    public int deleteById(int id);
+
+    public List<BlogResponseDTO> findByKeyword(String keyword);
+    
 }

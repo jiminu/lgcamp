@@ -32,8 +32,9 @@ const MainPage = () => {
 
 
   const getData = async () => {
-    await api.get("/blogs")
+    await api.get("/api/v1/blog/blogs")
       .then(response => {
+        console.log("[db] >>> blog : ", response.data);
         setContentAry(response.data);
       })
       .catch(error => {

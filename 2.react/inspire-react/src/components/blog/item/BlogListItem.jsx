@@ -29,6 +29,7 @@ const BlogListItem = ({blog}) => {
     <Wrapper onClick={() => {
       // console.log("onclick!!!!!!!!!!!!!!!!!!!!!", blog.id);
       moveUrl(`blog-read/${blog.id}`);
+      // moveUrl(`/api/v1/blog/readById/${blog.id}`);
     }}>
       <TitleText>{blog.title}</TitleText>
     </Wrapper>

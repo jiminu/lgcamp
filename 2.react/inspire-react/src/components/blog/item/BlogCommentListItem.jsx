@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "../ui/Button";
 
 const Wrapper = styled.div`
 width: calc(100% - 32px);
@@ -21,10 +22,11 @@ font-size: 16px;
 white-space: pre-wrap;
 `;
 
-const BlogCommentListItem = ({comment}) => {
+const BlogCommentListItem = ({comment, onDelete}) => {
   return (
     <Wrapper>
       <ContentText>{comment.content}</ContentText>
+      <Button title="삭제" btnHandler={() => onDelete(comment.id)}/>
     </Wrapper>
   );
 }

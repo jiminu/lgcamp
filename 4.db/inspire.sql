@@ -1435,5 +1435,30 @@ INSERT INTO blog_tbl(TITLE, CONTENT) VALUES
 ('배고프다', '마라탕~ 콜') ;
 
 
+UPDATE 	blog_tbl
+SET		title = 'test', content='test'
+WHERE		id = 5;
+
+SELECT id, title, content
+FROM blog_tbl
+WHERE id = 5;
+
 SELECT *
 FROM blog_tbl;
+
+DROP TABLE blog_comments_tbl;
+
+
+CREATE TABLE blog_comments_tbl (
+	id		INT	AUTO_INCREMENT PRIMARY KEY,
+	content VARCHAR(1000)	NOT NULL ,
+	blog_id INT NOT NULL ,
+	FOREIGN KEY	(blog_id) REFERENCES blog_tbl(id)	
+);
+
+SELECT *
+FROM blog_comments_tbl;
+
+INSERT INTO blog_comments_tbl(content, blog_id) VALUES
+('hooooooo', 1),
+('wow', 1);

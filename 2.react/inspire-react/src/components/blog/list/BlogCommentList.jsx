@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import BlogCommentListItem from "../item/BlogCommentListItem";
+import Button from "../ui/Button";
 
 const Wrapper = styled.div`
 display: flex;
@@ -14,13 +15,16 @@ margin-bottom: 16px;
 }
 `;
 
-const BlogCommentList = ({comments}) => {
+const BlogCommentList = ({ comments, commentDeleteHandler }) => {
   return (
     <Wrapper>
       {
         comments.map((comment) => {
           return (
-            <BlogCommentListItem key={comment.id} comment={comment}></BlogCommentListItem>
+            <BlogCommentListItem key={comment.id} comment={comment} onDelete={commentDeleteHandler}>
+
+            
+            </BlogCommentListItem>
           );
         })
       }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lgcns.inspire_restspring.rest.comment.repository.CommentMapper">
+
+    <insert id="insertRow"
+            parameterType="commentRequestDTO"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into blog_comments_tbl(content, blog_id) 
+        values (#{content}, #{blog_id});
+    
+    </insert>
+
+    <select id="selectRow"
+            parameterType="int"
+            resultType="commentResponseDTO">
+        
+        select id, content, blog_id
+        from blog_comments_tbl
+        where blog_id = #{blog_id}    
+        order by id asc
+    </select>
+
+    <delete id="deleteRow"
+            parameterType="int">
+        delete from blog_comments_tbl
+        where  id=#{id}
+    </delete>    
+    
+    </mapper>

@@ -67,38 +67,66 @@ const BlogReadPage = () => {
   const { blogId } = useParams();
   const [blog, setBlog] = useState({});
   const [comment, setComment] = useState("");
-
+  const [comments, setComments] = useState([]);
+  const id = blogId;
   const moveUrl = useNavigate();
+  
   const getBlog = async () => {
     // await api.get(`/blogs/${blogId}`, {
-    await api.get(`/blogs?_embed=comments`, {
-      params: {
-        id: blogId
-      }
-    })
-      .then(response => {
-        console.log(response.data[0]);
-        setBlog(response.data[0]);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  };
-  const commentHandler = async (blogId, content) => {
-    const data = {
-      blogId,
-      content
-    }
-    await api.post(`/comments`, data)
+    // await api.get(`/blogs?_embed=comments`, {
+    // await api.get(`/api/v1/blog/readById/`, {
+    //   params: {
+    //     id: blogId
+    //   }
+    // })
+    await api.get(`/api/v1/blog/readById/${id}`)
       .then(response => {
         console.log(response.data);
-        setComment("");
-        getBlog();
+        setBlog(response.data);
+        setComments(response.data.comments || []);
       })
       .catch(error => {
         console.log(error);
       })
   };
+                        
+  const commentHandler = async (blog_id, content) => {
+    const data = {
+      blog_id,
+      content
+    }
+    await api.post(`/api/v1/blog/comment/register`, data)
+      .then(response => {
+        console.log(response.data);
+        const newComment = response.data[response.data.length-1];
+        console.log("newComment : " , newComment);
+        setComments((ary) => {
+          return [...ary, newComment];
+        })
+        setComment("");
+        // getBlog();
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  };
+  
+  const commentDelete = async (id) => {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> comment delete function ", id);
+    
+    await api.delete(`/api/v1/blog/comment/delete/${id}`)
+    .then( response => {
+      if (response.status === 204) {
+        setComments((ary) => {
+          return ary.filter((c) => c.id !== id);
+        })
+        setComment('');
+      }
+    })
+    .catch( error => {
+      console.log("[db] >>>>> " , error)
+    })
+  }
 
   useEffect(() => {
     getBlog();
@@ -121,7 +149,8 @@ const BlogReadPage = () => {
 
           <CommentLabel>댓글</CommentLabel>
 
-          <BlogCommentList comments={blog.comments || []}></BlogCommentList>
+          <BlogCommentList comments={comments || []}
+                           commentDeleteHandler={commentDelete}></BlogCommentList>
 
           
           <TextArea height={40} value={comment} changeHandler={(e) => {

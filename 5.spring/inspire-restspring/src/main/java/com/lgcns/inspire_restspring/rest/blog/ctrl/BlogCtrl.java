@@ -100,42 +100,63 @@ public class BlogCtrl {
         System.out.println("[debug] >>> blog post : /register");
         System.out.println("[debug] >>> param req   : " + request);
         
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        int flag = service.insert(request);
+        
+        return (flag == 1) ? new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
     }
     
     
     @Operation(
         summary = "블로그 상세보기", 
         description = "블로그 id로 특정 블로그 검색")
-    @GetMapping("/read/{id}")
-    public ResponseEntity<BlogResponseDTO> read(
+    @GetMapping("/readById/{id}")
+    public ResponseEntity<BlogResponseDTO> readById(
         @Parameter(description = "조회할 블로그 id")
         @PathVariable("id") int id) {
         System.out.println("[debug] >>> blog read ");
         System.out.println("[debug] >>> id : " + id);
         
-        BlogResponseDTO response = null;
+        BlogResponseDTO response = service.findById(id);
         
+        System.out.println("><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + response);
+        
+        return (response != null) ? new ResponseEntity<>(response, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    
+    @Operation(summary = "블로그 키워드 검색", description = "키워드를 포함하는 블로그 검색")
+    @GetMapping("/readByKeyword/{keyword}")
+    public ResponseEntity<List<BlogResponseDTO>> readByKeyword(
+        @Parameter(description= "조회할 키워드")
+        @PathVariable("keyword") String keyword) {
+
+        System.out.println("[debug] >>> blog read ");
+        System.out.println("[debug] >>> keyword : " + keyword);
+            
+        List<BlogResponseDTO> response = service.findByKeyword(keyword);    
+            
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
  
-    @PutMapping("update/{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") int id, 
-                                @RequestBody BlogRequestDTO request) {
+    @PutMapping("/update")
+    public ResponseEntity<Void> update(@RequestBody BlogRequestDTO request) {
         System.out.println("[debug] >>> blog ctrl PUT path : /update/{id}");
-        System.out.println("[debug] >>> id : " + id);
+
         System.out.println("[debug] >>> dto : " + request);
         
-        return new ResponseEntity<>(HttpStatus.OK);
+        int flag = service.update(request);
+        
+        return (flag == 1) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }   
     
     
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") int id) {
         System.out.println("[debug] >>> blog ctrl DELETE path : /delete/{id}");
         System.out.println("[debug] >>> id : " + id);
         
+        int flag = service.delete(id);
         
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
 }

@@ -37,7 +37,7 @@ const BlogWritePage = () => {
       content
     }
     try {
-      const response = await api.post("blogs", data);
+      const response = await api.post("/api/v1/blog/register", data);
       // console.log(response);
       if (response.status === 201) {
         moveUrl("/");

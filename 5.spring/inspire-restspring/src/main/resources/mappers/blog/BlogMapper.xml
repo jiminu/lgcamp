@@ -9,4 +9,50 @@
         from    BLOG_TBL
     
     </select>    
-</mapper>
+
+    <insert id="insertRow"
+            parameterType="blogRequestDTO"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into BLOG_TBL(TITLE, CONTENT) 
+        values (#{ title }, #{ content })
+    </insert>
+    
+    <update id="updateRow"
+            parameterType="blogRequestDTO"
+            useGeneratedKeys="true"
+            keyProperty="id">
+            
+        update BLOG_TBL
+        set    title=#{title}, content=#{content}
+        where  id=#{id}
+    </update>    
+
+<!-- java.lang.Integer == int -->
+    <select id="findById"
+            parameterType="int"
+            resultType="blogResponseDTO">
+        select id, title, content
+        from BLOG_TBL
+        where id = #{id}
+    </select>    
+
+
+    <delete id="deleteById"
+            parameterType="int">
+        delete from BLOG_TBL
+        where id = #{ id }
+    </delete>    
+    
+    <select id="findByKeyword"
+            parameterType="java.lang.String"
+            resultType="blogResponseDTO">
+    
+    <![CDATA[
+        select id, title, content
+        from BLOG_TBL
+        where title LIKE CONCAT("%", #{keyword}, "%")
+        or    content LIKE CONCAT("%", #{keyword}, "%")
+        ]]>
+    </select>
+    </mapper>
