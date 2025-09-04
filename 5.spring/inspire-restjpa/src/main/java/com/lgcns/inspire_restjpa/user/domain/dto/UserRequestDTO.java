@@ -2,6 +2,9 @@ package com.lgcns.inspire_restjpa.user.domain.dto;
 
 import com.lgcns.inspire_restjpa.user.domain.entity.UserEntity;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +20,14 @@ import lombok.ToString;
 @ToString
 public class UserRequestDTO {
     
+    @Email(message = "이메일 형식과 맞지 않습니다.")
     private String email;
+    
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]+$",
+             message="패스워드를 다시 입력하세요.")
     private String passwd;
+
+    @NotNull(message = "이름을 입력해 주세요.")
     private String name;
     
     // factory method pattern

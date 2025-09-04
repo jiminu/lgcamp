@@ -4,10 +4,10 @@ spring:
 
     # maria db
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/inspire
-    username: root
-    password: 1234
+    driver-class-name: ${DRIVER}
+    url: ${URL}
+    username: ${USER}
+    password: ${PASSWD}
     
     # h2 db
   # datasource:
@@ -42,6 +42,9 @@ spring:
     
 server:
   port: 8088
+  
+jwt:
+  secret: ${JWT_SECRET_KEY}
     
     
 # mybatis:

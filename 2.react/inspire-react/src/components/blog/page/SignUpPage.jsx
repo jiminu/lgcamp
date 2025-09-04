@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import api from "../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 // Container
 const Container = styled.div`
@@ -66,66 +68,85 @@ const Button = styled.button`
 
 // SignUp Component
 const SignUpPage = () => {
-  const [email, setEmail] = useState('');
-  const [passwd, setPasswd] = useState('');
+  const moveUrl = useNavigate();
+  const [email, setEmail]                 = useState('');
+  const [passwd, setPasswd]               = useState('');
   const [confirmPasswd, setConfirmPasswd] = useState('');
-  const [name, setName] = useState('');
+  const [name, setName]                   = useState('');
 
 
-  const handleChange = (e) => {
 
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e, email, passwd, name) => {
     e.preventDefault();
+    console.log("email  : ", email);
+    console.log("passwd : ", passwd);
+    console.log("name   : ", name);
     if (passwd !== confirmPasswd) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
     // console.log("회원가입 정보:", form);
     // 여기서 API 호출 가능
+    // 1. 유효성 체크
+    // 2. 정상데이터 입력시 화면전환 -> /login 이동
+    
+    const data = { email, passwd, name };
+    await api.post('/api/v2/inspire/user/signup', data)
+            .then( response => {
+              console.log("[DEBUG] : post response -> ", response);
+              moveUrl("/login");
+            })
+            .catch (error => {
+              console.log("[DEBUG] : post error");
+            });
   };
 
   return (
     <Container>
       <FormWrapper>
         <Title>회원가입</Title>
-        <form onSubmit={handleSubmit}>
 
           <Input
-            type="email"
-            name="email"
-            placeholder="이메일"
-            value={email}
-            onChange={handleChange}
+            type        = "email"
+            name        = "email"
+            placeholder = "이메일"
+            value       = {email}
+            onChange    = {(e) => {
+              setEmail(e.target.value);
+            }}
             required
           />
           <Input
-            type="password"
-            name="passwd"
-            placeholder="비밀번호"
-            value={passwd}
-            onChange={handleChange}
+            type        = "password"
+            name        = "passwd"
+            placeholder = "비밀번호"
+            value       = {passwd}
+            onChange    = {(e) => {
+              setPasswd(e.target.value);
+            }}
             required
           />
           <Input
-            type="password"
-            name="confirmPasswd"
-            placeholder="비밀번호 확인"
-            value={confirmPasswd}
-            onChange={handleChange}
+            type        = "password"
+            name        = "confirmPasswd"
+            placeholder = "비밀번호 확인"
+            value       = {confirmPasswd}
+            onChange    = {(e) => {
+              setConfirmPasswd(e.target.value);
+            }}
             required
           />
           <Input
-            type="text"
-            name="name"
-            placeholder="이름"
-            value={name}
-            onChange={handleChange}
+            type        = "text"
+            name        = "name"
+            placeholder = "이름"
+            value       = {name}
+            onChange    = {(e) => {
+              setName(e.target.value);
+            }}
             required
           />
-          <Button type="submit">가입하기</Button>
-        </form>
+          <Button type="submit" onClick={(e) => handleSubmit(e, email,passwd,name)}>가입하기</Button>
       </FormWrapper>
     </Container>
   );
