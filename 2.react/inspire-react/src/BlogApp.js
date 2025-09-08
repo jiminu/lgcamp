@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import MainPage from "./components/blog/page/MainPage";
@@ -14,6 +14,12 @@ const DivTitleText = styled.p`
 `;
 
 const BlogApp = () => {
+  // useEffect(() => {
+  //   localStorage.removeItem("accessToken");
+  //   localStorage.removeItem("refreshToken");
+  //   console.log(">>>>>>>>>>.. 앱 시작: 토큰 초기화");
+  // }, []);
+  
   return (
     <BrowserRouter>
       <DivTitleText>

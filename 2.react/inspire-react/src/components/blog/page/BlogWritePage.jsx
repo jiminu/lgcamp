@@ -30,14 +30,31 @@ const BlogWritePage = () => {
   const [content, setContent] = useState("");
 
   const moveUrl = useNavigate();
+  
+  const token = localStorage.getItem("accessToken");
+  console.log("[BLOG WRITE PAGE] token : " , token);
 
   const saveHandler = async (title, content) => {
+    
+    // mybatis
+    // const data = {
+    //   title,
+    //   content
+    // }
+    
+    // jpa
+    const authorEmail = localStorage.getItem("userEmail");
     const data = {
       title,
-      content
+      content,
+      authorEmail 
     }
     try {
-      const response = await api.post("/api/v1/blog/register", data);
+      const response = await api.post("/auth/api/v2/blog/register", data, {
+        headers: {
+          Authorization: token ? `${token}` : ""
+        }
+      });
       // console.log(response);
       if (response.status === 201) {
         moveUrl("/");

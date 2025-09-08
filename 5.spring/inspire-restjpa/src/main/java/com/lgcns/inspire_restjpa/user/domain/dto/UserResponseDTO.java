@@ -20,8 +20,9 @@ public class UserResponseDTO {
     private String passwd;
     private String name;
     
-    private String accessToken;
-    private String refreshToken;
+    // token
+    // private String accessToken;
+    // private String refreshToken;
     
     
     // static factory method pattern

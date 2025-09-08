@@ -74,16 +74,16 @@ public class UserCtrl {
     
     // 인가(Autorization) : 권한 부여 (endpoint에 대한 접근 권한)
     // 요청 시 header 응답 시 전송한 Bearer token 유무 체크, 접근 권한 확인
-    @GetMapping("signin")
-    public ResponseEntity<UserResponseDTO> signin(UserRequestDTO request) {
+    @PostMapping("signin")
+    public ResponseEntity<UserResponseDTO> signin(@RequestBody UserRequestDTO request) {
         System.out.println("[db] >>>>> user ctrl sign in : " + request);
 
-        UserResponseDTO response = userService.signin(request);
+        Map<String, Object> response = userService.signin(request);
 
         return ResponseEntity.status(HttpStatus.OK)
-                            .header("Authorization", "Bearer "+response.getAccessToken())
-                            .header("Refresh-Token", response.getRefreshToken())
-                            .body(response);
+                            .header("Authorization", "Bearer "+(String)(response.get("access")))
+                            .header("Refresh-Token", (String)(response.get("refresh")))
+                            .body((UserResponseDTO)(response.get("response")));
 
     }
     

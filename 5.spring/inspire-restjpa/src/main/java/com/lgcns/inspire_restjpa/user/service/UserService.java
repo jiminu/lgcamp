@@ -1,5 +1,8 @@
 package com.lgcns.inspire_restjpa.user.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +29,7 @@ public class UserService {
         
     }
     
-    public UserResponseDTO signin(UserRequestDTO request) {
+    public Map<String, Object> signin(UserRequestDTO request) {
         System.out.println("[user service] sign in");
         
         UserEntity entity = userRepository.findByEmailAndPasswd(request.getEmail(), request.getPasswd());
@@ -34,10 +37,17 @@ public class UserService {
         String accToken = provider.generateAccessToken(request.getEmail());
         String refToken = provider.generateRefreshToken(request.getEmail());
         
-        UserResponseDTO response = UserResponseDTO.fromEntity(entity);
-        response.setAccessToken(accToken);
-        response.setRefreshToken(refToken);
+        System.out.println("[SIGN IN] >>>>>>>>>>>>> accToken : " + accToken);
         
-        return response;
+        UserResponseDTO response = UserResponseDTO.fromEntity(entity);
+        // response.setAccessToken(accToken);
+        // response.setRefreshToken(refToken);
+        
+        Map<String, Object> map = new HashMap<>();
+        map.put("response", response);
+        map.put("access", accToken);
+        map.put("refresh", refToken);
+        
+        return map;
     }
 }

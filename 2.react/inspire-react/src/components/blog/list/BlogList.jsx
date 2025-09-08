@@ -19,7 +19,7 @@ const BlogList = ({ blogs }) => {
       {
         blogs.map((blog, idx) => {
           return (
-            <BlogListItem key={blog.id} blog={blog}></BlogListItem>
+            <BlogListItem key={blog.blogId} blog={blog}></BlogListItem>
           )
         })
       }

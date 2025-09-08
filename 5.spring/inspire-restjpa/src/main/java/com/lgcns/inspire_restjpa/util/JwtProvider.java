@@ -23,10 +23,11 @@ public class JwtProvider {
     
     public String generateAccessToken(String email) {
         System.out.println("[DEBUG] : jwt provider generateAccessToken");
+        System.out.println("[DEBUG] : jwt provider generateAccessTokenAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         return Jwts.builder()
                     .setSubject(email)
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 10))
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                     .signWith(getStringKey())
                     .compact();
     }

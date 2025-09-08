@@ -1462,3 +1462,14 @@ FROM blog_comments_tbl;
 INSERT INTO blog_comments_tbl(content, blog_id) VALUES
 ('hooooooo', 1),
 ('wow', 1);
+
+
+SELECT *
+FROM user_entity;
+
+
+SELECT *
+FROM blog_entity;
+
+INSERT INTO blog_entity(title, content, author_email) VALUES
+('title~', 'test content~', 'a@a.a');

@@ -15,5 +15,4 @@ public class InspireRestjpaApplication {
 		});
 		SpringApplication.run(InspireRestjpaApplication.class, args);
 	}
-
 }

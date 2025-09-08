@@ -146,7 +146,7 @@ const SignUpPage = () => {
             }}
             required
           />
-          <Button type="submit" onClick={(e) => handleSubmit(e, email,passwd,name)}>가입하기</Button>
+          <Button type="button" onClick={(e) => handleSubmit(e, email,passwd,name)}>가입하기</Button>
       </FormWrapper>
     </Container>
   );
