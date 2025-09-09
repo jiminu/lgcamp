@@ -25,8 +25,8 @@ white-space: pre-wrap;
 const BlogCommentListItem = ({comment, onDelete}) => {
   return (
     <Wrapper>
-      <ContentText>{comment.content}</ContentText>
-      <Button title="삭제" btnHandler={() => onDelete(comment.id)}/>
+      <ContentText>{comment.comment}</ContentText>
+      <Button title="삭제" btnHandler={() => onDelete(comment.blogId, comment.commentId)}/>
     </Wrapper>
   );
 }

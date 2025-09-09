@@ -1,5 +1,6 @@
 package com.lgcns.inspire_restjpa.comment.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lgcns.inspire_restjpa.blog.domain.entity.BlogEntity;
 import com.lgcns.inspire_restjpa.user.domain.entity.UserEntity;
 
@@ -24,11 +25,11 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"blog"})
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int commentId;
+    private Integer commentId;
     
     @Column(nullable = false,
             length = 500)
@@ -37,6 +38,7 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY,
                optional = false)
     @JoinColumn(name = "blog_id")
+    @JsonBackReference
     private BlogEntity blog;
 
     // @ManyToOne(fetch = FetchType.LAZY,

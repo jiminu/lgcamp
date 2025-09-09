@@ -3,6 +3,7 @@ package com.lgcns.inspire_restjpa.blog.domain.dto;
 import java.util.List;
 
 import com.lgcns.inspire_restjpa.blog.domain.entity.BlogEntity;
+import com.lgcns.inspire_restjpa.comment.domain.dto.CommentResponseDTO;
 import com.lgcns.inspire_restjpa.comment.domain.entity.CommentEntity;
 
 import lombok.AllArgsConstructor;
@@ -19,12 +20,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BlogResponseDTO {
-    private int blogId;
+    private Integer blogId;
     private String title;
     private String content;
     private String authorEmail;
 
-    private List<String> comments;
+    private List<CommentResponseDTO> comments;
     
     public static BlogResponseDTO fromEntity(BlogEntity blog) {
         return BlogResponseDTO.builder()
@@ -33,7 +34,7 @@ public class BlogResponseDTO {
                             .content(blog.getContent())
                             .authorEmail(blog.getAuthor().getEmail())
                             .comments(blog.getComments().stream()
-                                      .map(CommentEntity::getComment)
+                                      .map(e -> CommentResponseDTO.fromEntity(e))
                                       .toList())
                             .build();
     }

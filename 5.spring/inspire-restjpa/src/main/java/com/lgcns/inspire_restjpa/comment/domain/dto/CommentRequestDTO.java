@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class CommentRequestDTO {
     private String comment;
-    private int blogId;
+    private Integer blogId;
     
     public CommentEntity toEntity(BlogEntity blog) {
         return CommentEntity.builder()

@@ -19,9 +19,9 @@ const BlogCommentList = ({ comments, commentDeleteHandler }) => {
   return (
     <Wrapper>
       {
-        comments.map((comment) => {
+        comments.map((comment, idx) => {
           return (
-            <BlogCommentListItem key={comment.id} comment={comment} onDelete={commentDeleteHandler}>
+            <BlogCommentListItem key={idx} comment={comment} onDelete={commentDeleteHandler}>
 
             
             </BlogCommentListItem>

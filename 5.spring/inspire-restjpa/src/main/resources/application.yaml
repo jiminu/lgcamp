@@ -51,3 +51,8 @@ jwt:
 #   mapper-locations:
 #   - /mappers/**/*Mapper.xml
 #   config-location: classpath:/config/blog/mybatis-config.xml
+
+openApi:
+  serviceKey: ${SERVICE_KEY}
+  callBackUrl: ${CALLBACKURL}
+  dataType: ${TYPE}

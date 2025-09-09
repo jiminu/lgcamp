@@ -68,7 +68,7 @@ const BlogReadPage = () => {
   const [blog, setBlog] = useState({});
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
-  const id = blogId;
+  // const id = blogId;
   const moveUrl = useNavigate();
   
   const getBlog = async () => {
@@ -79,25 +79,50 @@ const BlogReadPage = () => {
     //     id: blogId
     //   }
     // })
-    await api.get(`/api/v1/blog/readById/${id}`)
+    
+    const token = localStorage.getItem("accessToken");
+    console.log("[BLOG GET TOKEN TEST] : ", token);
+    console.log("[BLOG GET BLOGID] : ", blogId);
+    
+    await api.get(`/auth/api/v2/blog/read/${blogId}`, {
+      headers: {
+        Authorization: token ? `${token}` : ""
+      }
+    })
       .then(response => {
-        console.log(response.data);
+        console.log("[DEBUG] response : ", response);
+        console.log("[DEBUG] comments : ", response.data.comments);
         setBlog(response.data);
+        // setBlog({
+        //   blogId: response.data.blogId,
+        //   title: response.data.title,
+        //   content: response.data.content
+        // });
         setComments(response.data.comments || []);
       })
       .catch(error => {
         console.log(error);
       })
   };
+                     
+
                         
-  const commentHandler = async (blog_id, content) => {
+  const commentHandler = async (blogId, comment) => {
+    const token = localStorage.getItem("accessToken");
     const data = {
-      blog_id,
-      content
+      blogId,
+      comment
     }
-    await api.post(`/api/v1/blog/comment/register`, data)
+    console.log("data : " , data);
+    
+    await api.post(`/auth/api/v2/blog/comment/register`, data, {
+      headers: {
+        Authorization: token ? `${token}` : ""
+      }
+    })
       .then(response => {
         console.log(response.data);
+        console.log("comments : ", response);
         const newComment = response.data[response.data.length-1];
         console.log("newComment : " , newComment);
         setComments((ary) => {
@@ -111,14 +136,21 @@ const BlogReadPage = () => {
       })
   };
   
-  const commentDelete = async (id) => {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> comment delete function ", id);
+  const commentDelete = async (blogId, commentId) => {
+    const token = localStorage.getItem("accessToken");
+
+    console.log(">>>>>>>> comment delete function blog id", blogId);
+    console.log(">>>>>>>> comment delete function comment id", commentId);
     
-    await api.delete(`/api/v1/blog/comment/delete/${id}`)
+    await api.delete(`auth/api/v2/blog/comment/delete/${blogId}/${commentId}`, {
+      headers: {
+        Authorization: token ? `${token}` : ""
+      }
+    })
     .then( response => {
       if (response.status === 204) {
         setComments((ary) => {
-          return ary.filter((c) => c.id !== id);
+          return ary.filter((c) => c.commentId !== commentId);
         })
         setComment('');
       }
@@ -134,8 +166,8 @@ const BlogReadPage = () => {
 
   return (
     <Wrapper>
-      { !blog.id && <Spinner />}
-      {blog.id &&
+      { !blog.blogId && <Spinner />}
+      {blog.blogId &&
         <Container>
           <Button title="메인페이지로" btnHandler={() => {
             moveUrl("/");
@@ -157,7 +189,7 @@ const BlogReadPage = () => {
             setComment(e.target.value);
           }}></TextArea>
           
-          <Button title="댓글 작성" btnHandler={() => commentHandler(blog.id, comment)}></Button>
+          <Button title="댓글 작성" btnHandler={() => commentHandler(blog.blogId, comment)}></Button>
 
 
         </Container>

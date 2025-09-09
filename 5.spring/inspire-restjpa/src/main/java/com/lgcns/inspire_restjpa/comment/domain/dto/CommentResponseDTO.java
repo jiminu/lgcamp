@@ -16,9 +16,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CommentResponseDTO {
-    private int commentId;
+    private Integer commentId;
     private String comment;
-    private int blogId;
+    private Integer blogId;
     
     public static CommentResponseDTO fromEntity(CommentEntity entity) {
         return CommentResponseDTO.builder()

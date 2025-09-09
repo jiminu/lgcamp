@@ -3,6 +3,7 @@ package com.lgcns.inspire_restjpa.blog.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lgcns.inspire_restjpa.comment.domain.entity.CommentEntity;
 import com.lgcns.inspire_restjpa.user.domain.entity.UserEntity;
 
@@ -29,12 +30,12 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"comments"})
 public class BlogEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int blogId;
+    private Integer blogId;
     
     @Column(nullable = false,
             length = 150)
@@ -53,6 +54,7 @@ public class BlogEntity {
     @OneToMany(orphanRemoval = true, // 블로그가 삭제된다면 (parents) 댓글도 다 삭제 (child) 
                cascade = CascadeType.ALL,
                mappedBy = "blog")
+    @JsonManagedReference
     private List<CommentEntity> comments = new ArrayList<>();
     
 }

@@ -26,12 +26,13 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+// @ToString(exclude = {"blogs"})
 @ToString
 public class UserEntity {
     
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // private int id;
+    // private Integer id;
     
     @Id // primary key
     private String email; 

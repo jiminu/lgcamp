@@ -10,53 +10,72 @@ import com.lgcns.inspire_restjpa.blog.domain.dto.BlogRequestDTO;
 import com.lgcns.inspire_restjpa.blog.domain.dto.BlogResponseDTO;
 import com.lgcns.inspire_restjpa.blog.domain.entity.BlogEntity;
 import com.lgcns.inspire_restjpa.blog.repository.BlogRepository;
+import com.lgcns.inspire_restjpa.comment.domain.dto.CommentResponseDTO;
 import com.lgcns.inspire_restjpa.user.domain.entity.UserEntity;
 import com.lgcns.inspire_restjpa.user.repository.UserRepository;
 
 @Service
 public class BlogService {
-    
+
     @Autowired
     private BlogRepository blogRepository;
-    
+
     @Autowired
     private UserRepository userRepository;
-    
+
     public List<BlogResponseDTO> select() {
         System.out.println("[blog service] select");
 
         List<BlogEntity> entities = blogRepository.findAll();
-        
+
         // return entities.stream()
-        //             .map(entity -> BlogResponseDTO.fromEntity(entity))
-        //             .toList();
+        // .map(entity -> BlogResponseDTO.fromEntity(entity))
+        // .toList();
         return entities.stream()
-                    .map(entity -> BlogResponseDTO.builder()
-                                                  .blogId(entity.getBlogId())
-                                                  .title(entity.getTitle())
-                                                  .content(entity.getContent())
-                                                  .build())
-                    .toList();
-                     
+                .map(entity -> BlogResponseDTO.builder()
+                        .blogId(entity.getBlogId())
+                        .title(entity.getTitle())
+                        .content(entity.getContent())
+                        .build())
+                .toList();
+
     }
-    
+
     public BlogResponseDTO insert(BlogRequestDTO request) {
         System.out.println("[db] >>> blog service insert ");
-        
+
         // BlogRequestDTO blogRequest = BlogRequestDTO.builder()
-        //                                 .title(request.getTitle())
-        //                                 .content(request.getContent())
-        //                                 .authorEmail(request.getAuthorEmail())
-        //                                 .build();
+        // .title(request.getTitle())
+        // .content(request.getContent())
+        // .authorEmail(request.getAuthorEmail())
+        // .build();
         Optional<UserEntity> user = userRepository.findById(request.getAuthorEmail());
         BlogEntity blog = blogRepository.save(
-            BlogEntity.builder()
-            .title(request.getTitle())
-            .content(request.getContent())
-            .author(user.get())
-            .build()
-        );
-        
+                BlogEntity.builder()
+                        .title(request.getTitle())
+                        .content(request.getContent())
+                        .author(user.get())
+                        .build());
+
         return BlogResponseDTO.fromEntity(blog);
+    }
+
+    public BlogResponseDTO findBlog(Integer blogId) {
+        System.out.println("[db] >>> blog service findBlog ");
+        BlogEntity entity = blogRepository.findById(blogId)
+                                          .orElseThrow(() -> new RuntimeException("해당 id 블로그 없음"));
+
+        // System.out.println("[blog service entity] : " + entity);
+
+        // List<CommentResponseDTO> comments = entity.getComments()
+        //                                           .stream()
+        //                                           .map(e -> CommentResponseDTO.fromEntity(e))
+        //                                           .toList();
+        // System.out.println("[blog service comments] : " + comments);
+
+        BlogResponseDTO response =  BlogResponseDTO.fromEntity(entity);
+        // response.setComments(comments);
+
+        return response;
     }
 }
