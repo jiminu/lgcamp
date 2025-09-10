@@ -21,4 +21,19 @@ public class ForcastResponseDTO {
     @JsonProperty("category")
     private String category;
     
+    @JsonProperty("fcstDate")
+    private String fcstDate;
+    
+    @JsonProperty("fcstTime")
+    private String fcstTime;
+    
+    @JsonProperty("fcstValue")
+    private String fcstValue;
+    
+    @JsonProperty("nx")
+    private String nx;
+    
+    @JsonProperty("ny")
+    private String ny;
+    
 }

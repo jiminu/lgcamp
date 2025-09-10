@@ -69,7 +69,7 @@ public class ForcastCtrl {
                 System.out.println("result = " + result);
 
                 // 서비스 구현
-                // list = service.parsingJson(result);
+                list = service.parsingJson(result);
 
             } else {
 

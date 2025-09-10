@@ -96,6 +96,8 @@ public class JwtFilter implements Filter{
     return path.startsWith("/swagger-ui") ||
            path.startsWith("/index.html") ||
            path.startsWith("/v3/api-docs") ||
+           path.startsWith("/api/v2/inspire/ai/chat") ||
+           path.startsWith("/api/v2/inspire/ai/quiz") ||
            path.startsWith("/api/v2/inspire/forcast") ||
            path.startsWith("/api/v2/inspire/user/signin") ||
            path.startsWith("/api/v2/inspire/user/signup");
