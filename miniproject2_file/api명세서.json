@@ -1,0 +1,2354 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8088",
+            "description": "Generated server url"
+        }
+    ],
+    "tags": [
+        {
+            "name": "User API",
+            "description": "회원 API"
+        },
+        {
+            "name": "Review API",
+            "description": "리뷰 API"
+        },
+        {
+            "name": "Favorite API",
+            "description": "즐겨찾기 API"
+        },
+        {
+            "name": "RestArea API",
+            "description": "휴게소 API"
+        },
+        {
+            "name": "Food API",
+            "description": "음식 API"
+        },
+        {
+            "name": "Facility API",
+            "description": "편의시설 API"
+        },
+        {
+            "name": "Open API",
+            "description": "외부 데이터 연동 및 관리 API"
+        },
+        {
+            "name": "AI Chat API",
+            "description": "AI 챗봇 추천 서비스 API"
+        },
+        {
+            "name": "TMAP API",
+            "description": "TMAP 경로 및 POI 검색 API"
+        }
+    ],
+    "paths": {
+        "/api/v1/mini/user/update": {
+            "put": {
+                "tags": [
+                    "User API"
+                ],
+                "summary": "회원 정보 수정",
+                "description": "수정할 회원 정보를 입력해주세요.",
+                "operationId": "update",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/user/refresh": {
+            "post": {
+                "tags": [
+                    "User API"
+                ],
+                "summary": "토큰 리프레쉬",
+                "description": "인증 토큰을 리프레쉬합니다.",
+                "operationId": "refresh",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "401": {
+                        "description": "Invalid refresh token",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Refresh Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/user/logout": {
+            "post": {
+                "tags": [
+                    "User API"
+                ],
+                "summary": "회원 로그아웃",
+                "description": "계정에서 로그아웃 해주세요.",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Logout Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/user/login": {
+            "post": {
+                "tags": [
+                    "User API"
+                ],
+                "summary": "회원 로그인",
+                "description": "계정을 로그인해주세요.",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/user/create": {
+            "post": {
+                "tags": [
+                    "User API"
+                ],
+                "summary": "회원 생성",
+                "description": "계정을 생성해주세요.",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create User Success"
+                    },
+                    "404": {
+                        "description": "Create User Failed"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/tmap/route": {
+            "post": {
+                "tags": [
+                    "TMAP API"
+                ],
+                "summary": "경로 검색",
+                "description": "출발지와 목적지를 입력하여 경로를 검색합니다.",
+                "operationId": "route",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RouteRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "Route Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RouteResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Route Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RouteResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/tmap/poi_of_route": {
+            "post": {
+                "tags": [
+                    "TMAP API"
+                ],
+                "summary": "경로 상의 휴게소 검색",
+                "description": "경로를 따라 이동하며 근처의 휴게소를 검색합니다.",
+                "operationId": "poi_of_route",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoutePoiRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "POI of Route Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "POI of Route Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/review/update/{reviewId}": {
+            "post": {
+                "tags": [
+                    "Review API"
+                ],
+                "summary": "리뷰 정보 수정",
+                "description": "리뷰 ID를 입력해주세요.",
+                "operationId": "update_1",
+                "parameters": [
+                    {
+                        "name": "reviewId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReviewRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/review/create": {
+            "post": {
+                "tags": [
+                    "Review API"
+                ],
+                "summary": "리뷰 작성",
+                "description": "리뷰를 작성해주세요.",
+                "operationId": "create_1",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReviewRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post Review Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post Review Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReviewResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/restarea/update/{restAreaId}": {
+            "post": {
+                "tags": [
+                    "RestArea API"
+                ],
+                "summary": "휴게소 정보 수정",
+                "description": "휴게소 ID를 입력해주세요.",
+                "operationId": "update_2",
+                "parameters": [
+                    {
+                        "name": "restAreaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RestAreaRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/restarea/create": {
+            "post": {
+                "tags": [
+                    "RestArea API"
+                ],
+                "summary": "휴게소 생성",
+                "description": "휴게소를 생성해주세요.",
+                "operationId": "create_2",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RestAreaRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/update/{foodId}": {
+            "post": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "음식 정보 수정",
+                "description": "음식 ID를 입력해주세요.",
+                "operationId": "update_3",
+                "parameters": [
+                    {
+                        "name": "foodId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FoodRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FoodResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/create": {
+            "post": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "휴게소 음식 생성",
+                "description": "휴게소 음식을 생성해주세요.",
+                "operationId": "create_3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FoodRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FoodResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/favorite/create": {
+            "post": {
+                "tags": [
+                    "Favorite API"
+                ],
+                "summary": "즐겨찾기 생성",
+                "description": "즐겨찾기 추가해주세요.",
+                "operationId": "create_4",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FavoriteRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post Favorite Success"
+                    },
+                    "404": {
+                        "description": "Post Favorite Failed"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/facility/create": {
+            "post": {
+                "tags": [
+                    "Facility API"
+                ],
+                "summary": "편의시설 생성",
+                "description": "편의시설을 생성해주세요.",
+                "operationId": "create_5",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FacilityRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post Facility Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacilityResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Post Facility Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacilityResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/ai/chat": {
+            "post": {
+                "tags": [
+                    "AI Chat API"
+                ],
+                "summary": "AI 음식 추천",
+                "description": "휴게소 코드 목록을 기반으로 AI가 음식을 추천합니다.",
+                "operationId": "chat",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChatRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "500": {
+                        "description": "AI Recommendation Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "AI Recommendation Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/tmap/poi": {
+            "get": {
+                "tags": [
+                    "TMAP API"
+                ],
+                "summary": "POI 검색",
+                "description": "위치 정보를 이용하여 관심 지점(POI)을 검색합니다.",
+                "operationId": "poi",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/PoiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "POI Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PoiResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "POI Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PoiResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/review/lists/{restAreaId}": {
+            "get": {
+                "tags": [
+                    "Review API"
+                ],
+                "summary": "휴게소 ID 기반 리뷰 목록 조회",
+                "description": "휴게소 ID와 정렬방법(최신순 or 평점순)을 입력해주세요.",
+                "operationId": "findByRestAreaId",
+                "parameters": [
+                    {
+                        "name": "restAreaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "최신순"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReviewResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/review/lists/user/{userId}": {
+            "get": {
+                "tags": [
+                    "Review API"
+                ],
+                "summary": "회원 ID 기반 리뷰 목록 조회",
+                "description": "회원 ID를 입력해주세요.",
+                "operationId": "findByUserId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReviewResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/restarea/lists": {
+            "get": {
+                "tags": [
+                    "RestArea API"
+                ],
+                "summary": "휴게소 전체 목록 조회",
+                "description": "휴게소 전체 목록입니다.",
+                "operationId": "findAll",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/restarea/lists/restarea/{restAreaId}": {
+            "get": {
+                "tags": [
+                    "RestArea API"
+                ],
+                "summary": "휴게소ID 기반 휴게소 목록 조회",
+                "description": "휴게소 ID를 입력해주세요.",
+                "operationId": "findByRestAreaId_1",
+                "parameters": [
+                    {
+                        "name": "restAreaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/restarea/lists/direction/{direction}": {
+            "get": {
+                "tags": [
+                    "RestArea API"
+                ],
+                "summary": "Direction 기반 휴게소 목록 조회",
+                "description": "휴게소 Direction(상행 or 하행)을 입력해주세요.",
+                "operationId": "findByDirection",
+                "parameters": [
+                    {
+                        "name": "direction",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/restarea_update": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "휴게소 정보 업데이트",
+                "description": "외부 API로부터 휴게소 정보를 가져와 데이터베이스를 업데이트합니다.",
+                "operationId": "restarea_update",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/RestAreaInfoApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "RestArea Update Success"
+                    },
+                    "500": {
+                        "description": "RestArea Update Failed"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/location": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "휴게소 위치 정보 조회",
+                "description": "외부 API에서 휴게소 위치 좌표 정보를 조회합니다.",
+                "operationId": "restarea",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/RestAreaLocationApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "RestArea Location Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestAreaLocationApiResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "RestArea Location Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestAreaLocationApiResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/info": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "휴게소 정보 조회",
+                "description": "외부 API에서 휴게소 기본 정보를 조회합니다.",
+                "operationId": "restarea_1",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/RestAreaInfoApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "RestArea Info Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestAreaInfoApiResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "RestArea Info Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestAreaInfoApiResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/food_update": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "음식 정보 업데이트",
+                "description": "외부 API로부터 음식 정보를 가져와 데이터베이스를 업데이트합니다.",
+                "operationId": "food_update",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FoodApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Food Update Success"
+                    },
+                    "500": {
+                        "description": "Food Update Failed"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/food": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "음식 정보 조회",
+                "description": "외부 API에서 휴게소별 음식 정보를 조회합니다.",
+                "operationId": "food",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FoodApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Food Info Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FoodApiResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Food Info Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FoodApiResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/facility_update": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "편의시설 정보 업데이트",
+                "description": "외부 API로부터 편의시설 정보를 가져와 데이터베이스를 업데이트합니다.",
+                "operationId": "facility_update",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FacilityApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Facility Update Failed"
+                    },
+                    "200": {
+                        "description": "Facility Update Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/openapi/facility": {
+            "get": {
+                "tags": [
+                    "Open API"
+                ],
+                "summary": "편의시설 정보 조회",
+                "description": "외부 API에서 휴게소별 편의시설 정보를 조회합니다.",
+                "operationId": "facility",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/FacilityApiRequestDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Facility Info Search Failed",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacilityApiResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Facility Info Search Success",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FacilityApiResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/search/{name}": {
+            "get": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "메뉴 기반 음식 목록 조회",
+                "description": "음식 메뉴를 입력해주세요.",
+                "operationId": "searchByName",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FoodResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/search/signature/{restAreaId}": {
+            "get": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "휴게소 ID 기반 대표 메뉴 목록 조회",
+                "description": "휴게소 ID를 입력해주세요.",
+                "operationId": "searchByRestAreaId",
+                "parameters": [
+                    {
+                        "name": "restAreaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FoodResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/search/price/{price}": {
+            "get": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "가격 기반 음식 목록 조회",
+                "description": "가격을 입력해주세요.",
+                "operationId": "searchByPrice",
+                "parameters": [
+                    {
+                        "name": "arg0",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FoodResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/lists": {
+            "get": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "음식 목록 전체 조회",
+                "description": "휴게소 음식 전체 목록입니다.",
+                "operationId": "findAll_1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FoodResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/lists/{foodId}": {
+            "get": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "음식 ID 기반 음식 조회",
+                "description": "음식 ID를 입력해주세요.",
+                "operationId": "findByFoodId",
+                "parameters": [
+                    {
+                        "name": "foodId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FoodResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/favorite/lists/{userId}": {
+            "get": {
+                "tags": [
+                    "Favorite API"
+                ],
+                "summary": "회원 ID 기반 즐겨찾기 목록 조회",
+                "description": "회원 ID를 입력해주세요.",
+                "operationId": "findByUserId_1",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FavoriteResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/facility/search/{names}": {
+            "get": {
+                "tags": [
+                    "Facility API"
+                ],
+                "summary": "원하는 편의시설이 있는 휴게소 조회",
+                "description": "원하는 편의시설을 입력해주세요.",
+                "operationId": "searchByNames",
+                "parameters": [
+                    {
+                        "name": "names",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RestAreaResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/facility/lists/{restAreaId}": {
+            "get": {
+                "tags": [
+                    "Facility API"
+                ],
+                "summary": "휴게소ID 기반 편의시설 목록 조회",
+                "description": "휴게소 ID를 입력해주세요.",
+                "operationId": "findByRestAreaId_2",
+                "parameters": [
+                    {
+                        "name": "restAreaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FacilityResponseDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/user/delete": {
+            "delete": {
+                "tags": [
+                    "User API"
+                ],
+                "summary": "회원 정보 삭제",
+                "description": "삭제할 회원 정보를 입력해주세요.",
+                "operationId": "delete",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequestDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/review/delete/{reviewId}": {
+            "delete": {
+                "tags": [
+                    "Review API"
+                ],
+                "summary": "리뷰 정보 삭제",
+                "description": "리뷰 ID를 입력해주세요.",
+                "operationId": "delete_1",
+                "parameters": [
+                    {
+                        "name": "reviewId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/restarea/delete/{restAreaId}": {
+            "delete": {
+                "tags": [
+                    "RestArea API"
+                ],
+                "summary": "휴게소 정보 삭제",
+                "description": "휴게소 ID를 입력해주세요.",
+                "operationId": "delete_2",
+                "parameters": [
+                    {
+                        "name": "restAreaId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/food/delete/{foodId}": {
+            "delete": {
+                "tags": [
+                    "Food API"
+                ],
+                "summary": "음식 정보 삭제",
+                "description": "음식 ID를 입력해주세요.",
+                "operationId": "delete_3",
+                "parameters": [
+                    {
+                        "name": "foodId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/mini/favorite/delete/{favoriteId}": {
+            "delete": {
+                "tags": [
+                    "Favorite API"
+                ],
+                "summary": "즐겨찾기 삭제",
+                "description": "즐겨찾기 ID를 입력해주세요.",
+                "operationId": "delete_4",
+                "parameters": [
+                    {
+                        "name": "favoriteId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string"
+                    },
+                    "userEmail": {
+                        "type": "string"
+                    },
+                    "userNickname": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UserResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "userEmail": {
+                        "type": "string"
+                    },
+                    "userNickname": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RouteRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "startX": {
+                        "type": "string"
+                    },
+                    "startY": {
+                        "type": "string"
+                    },
+                    "endX": {
+                        "type": "string"
+                    },
+                    "endY": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FeatureDTO": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "geometry": {
+                        "$ref": "#/components/schemas/GeometryDTO"
+                    },
+                    "properties": {
+                        "$ref": "#/components/schemas/PropertiesDTO"
+                    }
+                }
+            },
+            "GeometryDTO": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "coordinates": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "traffic": {
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "format": "int32"
+                            }
+                        }
+                    }
+                }
+            },
+            "PropertiesDTO": {
+                "type": "object",
+                "properties": {
+                    "index": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "totalDistance": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalTime": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalFare": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "taxiFare": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pointIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nextRoadName": {
+                        "type": "string"
+                    },
+                    "turnType": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pointType": {
+                        "type": "string"
+                    },
+                    "lineIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "distance": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "time": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "roadType": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "facilityType": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "RouteResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "usedFavoriteRouteVertices": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FeatureDTO"
+                        }
+                    }
+                }
+            },
+            "RoutePoiRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "startX": {
+                        "type": "string"
+                    },
+                    "startY": {
+                        "type": "string"
+                    },
+                    "endX": {
+                        "type": "string"
+                    },
+                    "endY": {
+                        "type": "string"
+                    },
+                    "userX": {
+                        "type": "string"
+                    },
+                    "userY": {
+                        "type": "string"
+                    },
+                    "radius": {
+                        "type": "string"
+                    },
+                    "searchType": {
+                        "type": "string"
+                    },
+                    "searchCategory": {
+                        "type": "string"
+                    },
+                    "lineString": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "direction": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "tel": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "routeName": {
+                        "type": "string"
+                    },
+                    "xvalue": {
+                        "type": "string"
+                    },
+                    "yvalue": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ReviewRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "rating": {
+                        "type": "string"
+                    },
+                    "comment": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ReviewResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "reviewId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "rating": {
+                        "type": "string"
+                    },
+                    "comment": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "direction": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "tel": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "routeName": {
+                        "type": "string"
+                    },
+                    "xvalue": {
+                        "type": "string"
+                    },
+                    "yvalue": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FoodRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "foodName": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "string"
+                    },
+                    "isSignature": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FoodResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "foodId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "foodName": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "string"
+                    },
+                    "isSignature": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FavoriteRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FacilityRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FacilityResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "facilityId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ChatRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "userRequest": {
+                        "type": "string"
+                    },
+                    "restareaCodes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ChatResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "restArea": {
+                        "type": "string"
+                    },
+                    "recommends": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Recommend"
+                        }
+                    }
+                }
+            },
+            "Recommend": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "food": {
+                        "type": "string"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PoiRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "searchKeyword": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Poi": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "noorLat": {
+                        "type": "string"
+                    },
+                    "noorLon": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PoiResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "searchPoiInfo": {
+                        "$ref": "#/components/schemas/SearchPoiInfo"
+                    }
+                }
+            },
+            "Pois": {
+                "type": "object",
+                "properties": {
+                    "poi": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Poi"
+                        }
+                    }
+                }
+            },
+            "SearchPoiInfo": {
+                "type": "object",
+                "properties": {
+                    "totalCount": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "string"
+                    },
+                    "pois": {
+                        "$ref": "#/components/schemas/Pois"
+                    }
+                }
+            },
+            "RestAreaInfoApiRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "svarCd": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaLocationApiRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "stdRestCd": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaLocationApiResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "list": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RestAreaLocationDTO"
+                        }
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "string"
+                    },
+                    "pageNo": {
+                        "type": "string"
+                    },
+                    "numOfRows": {
+                        "type": "string"
+                    },
+                    "pageSize": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaLocationDTO": {
+                "type": "object",
+                "properties": {
+                    "xvalue": {
+                        "type": "string"
+                    },
+                    "yvalue": {
+                        "type": "string"
+                    },
+                    "unitName": {
+                        "type": "string"
+                    },
+                    "unitCode": {
+                        "type": "string"
+                    },
+                    "routeName": {
+                        "type": "string"
+                    },
+                    "routeNo": {
+                        "type": "string"
+                    },
+                    "xValue": {
+                        "type": "string"
+                    },
+                    "yValue": {
+                        "type": "string"
+                    },
+                    "stdRestCd": {
+                        "type": "string"
+                    },
+                    "serviceAreaCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaInfoApiResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "list": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RestAreaInfoDTO"
+                        }
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "string"
+                    },
+                    "pageNo": {
+                        "type": "string"
+                    },
+                    "numOfRows": {
+                        "type": "string"
+                    },
+                    "pageSize": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RestAreaInfoDTO": {
+                "type": "object",
+                "properties": {
+                    "svarAddr": {
+                        "type": "string"
+                    },
+                    "routeNm": {
+                        "type": "string"
+                    },
+                    "hdqrNm": {
+                        "type": "string"
+                    },
+                    "mtnofNm": {
+                        "type": "string"
+                    },
+                    "svarCd": {
+                        "type": "string"
+                    },
+                    "svarNm": {
+                        "type": "string"
+                    },
+                    "svarGsstClssNm": {
+                        "type": "string"
+                    },
+                    "gudClssNm": {
+                        "type": "string"
+                    },
+                    "cocrPrkgTrcn": {
+                        "type": "string"
+                    },
+                    "fscarPrkgTrcn": {
+                        "type": "string"
+                    },
+                    "dspnPrkgTrcn": {
+                        "type": "string"
+                    },
+                    "rprsTelNo": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FoodApiRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "stdRestCd": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FoodApiResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "list": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FoodDTO"
+                        }
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "string"
+                    },
+                    "pageNo": {
+                        "type": "string"
+                    },
+                    "numOfRows": {
+                        "type": "string"
+                    },
+                    "pageSize": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FoodDTO": {
+                "type": "object",
+                "properties": {
+                    "stdRestCd": {
+                        "type": "string"
+                    },
+                    "foodNm": {
+                        "type": "string"
+                    },
+                    "foodCost": {
+                        "type": "string"
+                    },
+                    "etc": {
+                        "type": "string"
+                    },
+                    "recommendyn": {
+                        "type": "string"
+                    },
+                    "seasonMenu": {
+                        "type": "string"
+                    },
+                    "bestfoodyn": {
+                        "type": "string"
+                    },
+                    "premiumyn": {
+                        "type": "string"
+                    },
+                    "restCd": {
+                        "type": "string"
+                    },
+                    "foodMaterial": {
+                        "type": "string"
+                    },
+                    "stdRestNm": {
+                        "type": "string"
+                    },
+                    "svarAddr": {
+                        "type": "string"
+                    },
+                    "routeCd": {
+                        "type": "string"
+                    },
+                    "routeNm": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FacilityApiRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "stdRestCd": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FacilityApiResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "list": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FacilityDTO"
+                        }
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "string"
+                    },
+                    "pageNo": {
+                        "type": "string"
+                    },
+                    "numOfRows": {
+                        "type": "string"
+                    },
+                    "pageSize": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FacilityDTO": {
+                "type": "object",
+                "properties": {
+                    "stdRestCd": {
+                        "type": "string"
+                    },
+                    "stime": {
+                        "type": "string"
+                    },
+                    "routeCd": {
+                        "type": "string"
+                    },
+                    "svarAddr": {
+                        "type": "string"
+                    },
+                    "routeNm": {
+                        "type": "string"
+                    },
+                    "stdRestNm": {
+                        "type": "string"
+                    },
+                    "etime": {
+                        "type": "string"
+                    },
+                    "redId": {
+                        "type": "string"
+                    },
+                    "redDtime": {
+                        "type": "string"
+                    },
+                    "lsttmAltrDttm": {
+                        "type": "string"
+                    },
+                    "psCode": {
+                        "type": "string"
+                    },
+                    "psName": {
+                        "type": "string"
+                    },
+                    "psDesc": {
+                        "type": "string"
+                    }
+                }
+            },
+            "FavoriteResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "favoriteId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "restAreaId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
